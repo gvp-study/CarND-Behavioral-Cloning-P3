@@ -64,6 +64,28 @@ for line in lines:
     imagesR.append(imageR)
     measurement = float(line[3])
     measurements.append(measurement)
+
+#
+# Translate the image by a random translation in X and return the
+# Affine warpped image along with the altered steering.
+#
+trans_range = 100
+
+def translate_image(image,steer):
+    # Translation
+    tr_x = trans_range*np.random.uniform()-trans_range/2
+    steer_ang = steer - tr_x/trans_range*2*.2
+    tr_y = 0
+    rows, cols, ch = image.shape
+    Trans_M = np.float32([[1,0,tr_x],[0,1,tr_y]])
+    image_tr = cv2.warpAffine(image,Trans_M,(cols,rows))
+    return image_tr,steer_ang
+#
+# Flip the image left to right.
+#
+def flip_image(image):
+    flipimage = np.fliplr(image)
+    return flipimage
 #
 # Simple setup of the training samples without the use of the generator.
 #
@@ -98,7 +120,7 @@ for i in range(0, dsize):
         #
         # When the steering angle is close to zero, add a random translation to the left or right and use it.
         #
-        use_image, use_angle = trans_image(imagesC[i], sa)
+        use_image, use_angle = translate_image(imagesC[i], sa)
         X_t.append(use_image)
         m_t.append(use_angle)
 
