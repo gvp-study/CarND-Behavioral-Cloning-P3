@@ -141,6 +141,8 @@ I then recorded the vehicle recovering from the left side and right sides of the
 
 I separately recorded a drive on track two. Surprisingly, I found that the model.h5 it generated was able to drive autonmously for a fair distance along the path despite being a radically different environment. This demonstrates that the model is robust. I hope to augment the model trained on the first track with the data from the second track if that is possible in the coming days.
 
+#### 3. Loss vs epochs
+
 The model mean square error loss vs epochs is shown below. I used only 3 epochs for training. I revised the model architecture to reduce overfitting the data. I used Dropouts and ELUs and MaxPooling to reduce overfitting.
 ![alt text][image6]
 
@@ -158,8 +160,12 @@ The movie I made of successfully running the simulator for a whole lap is in the
 
 ![alt text][movie1]
 
-Note that I did not use the generator as I could not figure out an elegant way to incorporate the random 10% probablility for zero steer images into a fixed sample size set. I would like to do this in the coming days if I can revise this project.
-
 For a typical run there was 2542 images. This was split 80:20 to 2033 training images and 509 for validation.
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was found to be 3. I found this by experimenting with different datasets and number of epochs which showed a steady monotonic drop in the loss with epochs. I used an adam optimizer so that manually training the learning rate wasn't necessary except when merging models from different datasets.
+
+#### 3. Stuff to do
+Note that I did not use the generator as I could not figure out an elegant way to incorporate the random 10% probability for zero steer images into a fixed sample size set. I would like to do this in the coming days if I can revise this project. I did make a generator but it looked like the model performed worse in my experiments than when made without it.
+
+#### 3. References
+My mentor provided me with several links to help with this project. I also looked at the notes provided in the forums and suggested by the course.
